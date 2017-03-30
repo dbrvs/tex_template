@@ -1,0 +1,138 @@
+\documentclass[11pt]{article}
+\usepackage[parfill]{parskip} %to make indents on returns go away
+\usepackage{graphicx} %to allow graphics
+\usepackage{amsmath} %to allow most math
+\usepackage[letterpaper, total={5in, 7in}]{geometry}
+\usepackage{tikz} 
+\usepackage{verbatim}
+
+%making new names for common things
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{equation}\begin{aligned}}
+\newcommand{\eeqa}{\end{aligned}\end{equation}}
+\newcommand{\Dt}{\Delta t}
+
+%for the table of contents
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=magenta,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+%for Tikz
+\usetikzlibrary{arrows,shapes,positioning}
+\usetikzlibrary{decorations.markings}
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzstyle reverse directed=[postaction={decorate,decoration={markings,
+    mark=at position .65 with {\arrowreversed[arrowstyle]{stealth};}}}]
+
+
+\title{Template in TeX}
+\author{dbr}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{This is a big heading}
+
+Notice I made a table of contents above, this can be useful. It can also be useful to write comments to yourself in the source code, use the $\%$ sign to do that. That means the percent sign is special and needs to be written special in TeX, that's a common error.
+
+\subsection{And this is a sub heading}
+
+You can make a list:
+
+\begin{itemize}
+\item first let's learn some easy math stuff
+\end{itemize}
+
+
+Maybe you have the most brilliant simple equation
+
+\beq
+E=mc^2
+\eeq
+
+or maybe you need 2 lines
+
+\beqa
+\frac{\partial x}{\partial t}&=\dot{x}=\frac{\Delta x}{\Dt} = v\\
+v&=\sqrt{2E/m}
+\eeqa
+
+maybe it's not a super important equation, and thus doesn't need to be numbered
+
+\[ F=ma \]
+
+and if you want a matrix, like an $m\times n $ matrix $\mathcal{M}$?
+
+\[
+\mathcal{M} = \begin{bmatrix}
+    x_{11} & x_{12} & x_{13} & \dots  & x_{1n} \\
+    x_{21} & x_{22} & x_{23} & \dots  & x_{2n} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    x_{m1} & x_{m2} & x_{m3} & \dots  & x_{mn}
+\end{bmatrix}
+\]
+
+If you want to denote code, typically you might write: I used \texttt{ode15} in Matlab.
+
+I like to make {\bf vectors} bold, e.g. $\mathbf{v}=a\hat{x}+b\hat{y}$, and sometimes greek letters need to be bolded as well $\boldsymbol{\xi}$
+
+\subsection{Bibliography stuff}
+
+I often use the hyperref package so that I can color my citations and make them clickable, for example Ref.~\cite{Sompayrac2011}, has been essential to my immunology learning. Note the tilde in the source document it makes the spacing correct.
+
+Using .bib files is awesome, so you can look into that as well.
+
+\section{Going nuts with Tikz}
+
+You can go crazy making pictures in TeX too, and reference them like this: in Fig.~\ref{fig1}, we see some crazy shit. 
+
+
+\begin{figure}[h!]\centering
+%\includegraphics[width=3.2in]{PIC_hivLatency} %use to add your own
+
+\begin{tikzpicture}
+
+    % define coordinates
+    \coordinate (O) at (0,0) ;
+    \coordinate (A) at (0,4) ;
+    \coordinate (B) at (0,-4) ;
+    
+    % media
+    \fill[blue!25!,opacity=.3] (-4,0) rectangle (4,4);
+    \fill[blue!60!,opacity=.3] (-4,0) rectangle (4,-4);
+    \node[right] at (2,2) {Air};
+    \node[left] at (-2,-2) {Water};
+
+    % axis
+    \draw[dash pattern=on5pt off3pt] (A) -- (B) ;
+
+    % rays
+    \draw[red,ultra thick,reverse directed] (O) -- (130:5.2);
+    \draw[blue,directed,ultra thick] (O) -- (-70:4.24);
+
+    % angles
+    \draw (0,1) arc (90:130:1);
+    \draw (0,-1.4) arc (270:290:1.4) ;
+    \node[] at (280:1.8)  {$\theta_{2}$};
+    \node[] at (110:1.4)  {$\theta_{1}$};
+\end{tikzpicture}
+\caption{This is a tikz figure I stole from the internet. Lol.}
+\label{fig1}
+\end{figure}
+
+\bibliographystyle{unsrt}
+\begin{thebibliography}{10}
+\bibitem{Sompayrac2011} Sompayrac, Lauren M. How the immune system works. John Wiley \& Sons, 2011.
+\end{thebibliography}
+
+
+\end{document}  
